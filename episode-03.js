@@ -42,8 +42,7 @@ function prop(key, obj) {
 // Returns a new object with only the specified properties
 function pick(keysToPick, obj) {
   return Object.entries(obj).reduce(
-    (target, [key, val]) =>
-      keysToPick.includes(key) ? { ...target, [key]: val } : target,
+    (target, [key, val]) => (keysToPick.includes(key) ? { ...target, [key]: val } : target),
     {}
   );
 }
@@ -66,17 +65,24 @@ function sortBy(evaluate, array) {
   return [...array].sort((a, b) => (evaluate(a) < evaluate(b) ? -1 : 1));
 }
 
-// 🆕 map: Applies a function to every list item
+// 🆕 map: Applies a function to every list item and creates a new list from the results
 // But you knew that already..
 function map(mapFn, array) {
   return array.map(mapFn);
 }
 
+// 🆕 forEach: Applies a function to every list item
+// Working the same as you expect
+function forEach(fn, array) {
+  return array.forEach(fn);
+}
+
 // ~~~~~~~~~~~~~~~~~~~~ End of general functions ~~~~~~~~~~~~~~~~~~~
 
+// With a few new tools in our toolbelt, let's try to refactor 💪
+
 // Make the API request
-var queryStarWarsMovies = async () =>
-  await axios.get('https://swapi.co/api/films/');
+var queryStarWarsMovies = async () => await axios.get('https://swapi.co/api/films/');
 
 // Instead of storing our data,
 // let's just define `what` should happen to our data
@@ -101,11 +107,24 @@ var printMovie = (movie, index) => {
   logToConsole(listItem);
 };
 
-var printListOfMovies = movieList => map(printMovie, movieList);
+var printListOfMovies = movieList => forEach(printMovie, movieList);
 
 // Phew... A job well done 👍
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Wait, you are still here? 🧐
+
 
 // Oh yeah! We haven't actually DONE anything yet. 😯
 // All we did is define functions!
@@ -116,7 +135,7 @@ queryStarWarsMovies()
   .then(sortByReleaseDate)
   .then(printListOfMovies);
 
-// If you aren't comfortable with promises yet, this is the same as:
+// In case you aren't comfortable with promises yet, this is the same as:
 // var response = await queryStarWarsMovies();
 // var results = getMovies(response);
 // var movies = pickTitleAndReleaseDates(results);

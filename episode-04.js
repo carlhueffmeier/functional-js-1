@@ -26,8 +26,7 @@ var chalk = require('chalk');
 // var add5 = add(5)
 // add5(5) -> 10
 function curry(fn) {
-  return (...args) =>
-    args.length >= fn.length ? fn(...args) : curry(fn.bind(null, ...args));
+  return (...args) => (args.length >= fn.length ? fn(...args) : curry(fn.bind(null, ...args)));
 }
 
 // Another common pattern we see in our code:
@@ -62,8 +61,7 @@ var episodeThreeFunctions = {
   },
   pick: function pick(keysToPick, obj) {
     return Object.entries(obj).reduce(
-      (target, [key, val]) =>
-        keysToPick.includes(key) ? { ...target, [key]: val } : target,
+      (target, [key, val]) => (keysToPick.includes(key) ? { ...target, [key]: val } : target),
       {}
     );
   },
@@ -75,6 +73,9 @@ var episodeThreeFunctions = {
   },
   map: function map(mapFn, array) {
     return array.map(mapFn);
+  },
+  forEach: function forEach(fn, array) {
+    return array.forEach(fn);
   }
 };
 
@@ -85,6 +86,7 @@ var pick = curry(episodeThreeFunctions.pick);
 var path = curry(episodeThreeFunctions.path);
 var sortBy = curry(episodeThreeFunctions.sortBy);
 var map = curry(episodeThreeFunctions.map);
+var forEach = curry(episodeThreeFunctions.forEach);
 
 // And notice how we don't need to curry unary functions 👌
 var identity = episodeThreeFunctions.identity;
@@ -92,8 +94,7 @@ var identity = episodeThreeFunctions.identity;
 // ~~~~~~~~~~~~~~~~~~~~ End of general functions ~~~~~~~~~~~~~~~~~~~
 
 // Getting the data we need
-var queryStarWarsMovies = async () =>
-  await axios.get('https://swapi.co/api/films/');
+var queryStarWarsMovies = async () => await axios.get('https://swapi.co/api/films/');
 
 var getMoviesWithReleaseDate = pipe(
   path(['data', 'results']),
@@ -115,7 +116,7 @@ var printMovie = pipe(
   typeset,
   console.log
 );
-var printListOfMovies = map(printMovie);
+var printListOfMovies = forEach(printMovie);
 
 // Now, let's put everything together ✌️
 var printMoviesOrderedByRelease = pipe(
@@ -132,13 +133,14 @@ queryStarWarsMovies().then(printMoviesOrderedByRelease);
 // - We don't store data *anywhere*
 // - Our script is extremely flexible
 
-// "But that's not actually any *shorter* ",
+// "But that's not actually any *shorter*",
 // I hear one young Padawan in the back say in a condescending tone.
 
+// Whow, ok now!
 // Let me stress that point: The benefit isn't the reduction of code,
 // but in the flexibility and deterministic behaviour of our code.
 
-// _But_...
+// *But*..
 // Just for fun, let's see how it would look like to
 // print the movies in alphabetical order (in a more concise way)
 

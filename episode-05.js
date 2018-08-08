@@ -27,8 +27,7 @@ var chalk = require('chalk');
 var R = require('ramda');
 
 // Getting data
-var queryStarWarsMovies = async () =>
-  await axios.get('https://swapi.co/api/films/');
+var queryStarWarsMovies = R.partial(axios.get, ['https://swapi.co/api/films/']);
 
 var getMoviesWithReleaseDate = R.pipe(
   R.path(['data', 'results']),
@@ -38,19 +37,19 @@ var getMoviesWithReleaseDate = R.pipe(
 // Sorting
 var getReleaseDate = R.pipe(
   R.prop('release_date'),
-  dateString => new Date(dateString)
+  R.construct(Date)
 );
-var sortByReleaseDate = R.sortBy(R.ascend(getReleaseDate));
+var sortByReleaseDate = R.sortBy(getReleaseDate);
 
 // Formatting
-var formatMovieListItem = (movie, index) =>
-  `${index}: ${R.prop('title', movie)}`;
+var formatMovieListItem = (movie, index) => `${index + 1}: ${movie.title}`;
+var typeset = chalk.cyanBright.bold;
 var printMovie = R.pipe(
   formatMovieListItem,
-  chalk.cyanBright.bold,
+  typeset,
   console.log
 );
-var printListOfMovies = R.addIndex(R.map)(printMovie);
+var printListOfMovies = R.addIndex(R.forEach)(printMovie);
 
 // Composition
 var printMoviesOrderedByRelease = R.pipe(
