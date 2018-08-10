@@ -31,7 +31,7 @@ var chalk = require('chalk');
 
   // Create watch list
   sortedMovies
-    .map((movie, i) => `${i}: ${movie.title}`)
+    .map((movie, i) => `${i + 1}: ${movie.title}`)
     .map(listEntry => chalk.cyanBright.bold(listEntry))
     .forEach(row => console.log(row));
 })();

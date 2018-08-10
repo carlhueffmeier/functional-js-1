@@ -35,7 +35,7 @@ var chalk = require('chalk');
 
   // Format and print the watch list
   for (let i = 0; i < sortedMovies.length; i += 1) {
-    let listEntry = `${i}: ${sortedMovies[i].title}`;
+    let listEntry = `${i+1}: ${sortedMovies[i].title}`;
     listEntry = chalk.cyanBright.bold(listEntry);
     console.log(listEntry);
   }

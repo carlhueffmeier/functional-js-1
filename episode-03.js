@@ -97,7 +97,7 @@ var getReleaseDate = movie => convertToDate(getReleaseDateString(movie));
 var sortByReleaseDate = array => sortBy(getReleaseDate, array);
 
 // Create watch list
-var formatMovieListItem = (movie, index) => `${index}: ${prop('title', movie)}`;
+var formatMovieListItem = (movie, index) => `${index + 1}: ${prop('title', movie)}`;
 var typeset = string => chalk.cyanBright.bold(string);
 var logToConsole = output => console.log(output);
 
@@ -123,8 +123,12 @@ var printListOfMovies = movieList => forEach(printMovie, movieList);
 
 
 
-// Wait, you are still here? 🧐
 
+
+
+
+
+// Wait, you are still here? 🧐
 
 // Oh yeah! We haven't actually DONE anything yet. 😯
 // All we did is define functions!

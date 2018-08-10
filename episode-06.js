@@ -45,6 +45,36 @@ axios
     )
   );
 
+// Without comments, for your viewing pleasure:
+// axios
+//   .get('https://swapi.co/api/films/')
+//   .then(
+//     pipe(
+//       path(['data', 'results']),
+//       map(pick(['title', 'release_date'])),
+//       sortBy(
+//         pipe(
+//           prop('release_date'),
+//           construct(Date)
+//         )
+//       ),
+//       addIndex(forEach)(
+//         pipe(
+//           (movie, index) => `${add(1)(index)}: ${prop('title', movie)}`,
+//           chalk.cyanBright.bold,
+//           console.log
+//         )
+//       )
+//     )
+//   )
+//   .catch(
+//     pipe(
+//       error => `An error occurred: ${error.message}`,
+//       chalk.redBright.bold,
+//       console.error
+//     )
+//   );
+
 // ⚠️ Please proceed with caution ⚠️
 
 // Let's keep our style of programming compatible with other people 👫
