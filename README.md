@@ -14,7 +14,7 @@ Pull requests for clarification are most welcome!
 npm install
 ```
 
-2.  Execute each file with from the project folder
+2.  Execute each file from within the project folder
 
 ```
 node episode-01.js
